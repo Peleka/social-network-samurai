@@ -1,8 +1,6 @@
 import React from "react";
-import classes from './Profile.module.css'
-import MyPosts from "./MyPosts/MyPosts";
 
-const Profile = () => {
+const ProfileInfo = () => {
     return (
         <div>
             <div>
@@ -12,9 +10,8 @@ const Profile = () => {
             <div>
                 ava + description
             </div>
-            <MyPosts/>
         </div>
     )
 }
 
-export default Profile;
+export default ProfileInfo;
