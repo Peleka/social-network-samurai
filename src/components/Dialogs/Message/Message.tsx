@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import classes from '../Dialogs.module.css';
 
 
@@ -10,6 +10,7 @@ type MessagesItemType = {
 const MessagesItem = (props: MessagesItemType) => {
     return (
         <div className={classes.message}>
+
             {props.message}
         </div>
     )
