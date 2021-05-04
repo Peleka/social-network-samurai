@@ -1,3 +1,9 @@
+const ADD_POST = "ADD-POST"
+const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT"
+const ADD_MESSAGE = "ADD_MESSAGE"
+const CHANGE_NEW_MESSAGE = "CHANGE_NEW_MESSAGE"
+
+
 export type StoreType = {
     _state: RootStateType
     _addMessage: () => void
@@ -7,12 +13,9 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionsTypes) => void
 }
-
 // type AddPostActionType = ReturnType<typeof addPostAC>
 // type ChangeNewPostActionType = ReturnType<typeof changeNewPostAC>
-
 export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewPostAC> | ReturnType<typeof addMessageAC> | ReturnType<typeof changeNewMessageAC>
-
 // type AddPostActionType = {
 //     type: "ADD-POST"
 //     postText: string
@@ -20,25 +23,25 @@ export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof chan
 
 export const addPostAC = (postText: string) => {
     return {
-        type: "ADD-POST",
+        type: ADD_POST,
         postText: postText
     } as const
 }
 export const changeNewPostAC = (newText: string) => {
     return {
-        type: "CHANGE_NEW_TEXT",
+        type: CHANGE_NEW_TEXT,
         newText: newText
     } as const
 }
 export const addMessageAC = (messageText: string) => {
     return {
-        type: "ADD_MESSAGE",
+        type: ADD_MESSAGE,
         messageText: messageText
     } as const
 }
 export const changeNewMessageAC = (message: string) => {
     return {
-        type: "CHANGE_NEW_MESSAGE",
+        type: CHANGE_NEW_MESSAGE,
         message: message
     } as const
 }
@@ -82,14 +85,12 @@ export const store: StoreType = {
     _onChange() {
         console.log('state changed')
     },
-
     subscribe(observer: () => void) {
         this._onChange = observer
     },
     getState() {
         return this._state
     },
-
     _addMessage() {
         let newMessage: MessageType = {
             id: 7,
@@ -98,10 +99,9 @@ export const store: StoreType = {
         this._state.dialogsPage.messages.push(newMessage)
         this._state.dialogsPage.newChangeMessage = ''
         this._onChange()
-    },
-
+    },                                //можно делать так
     dispatch(action) {
-        if (action.type === "ADD-POST") {
+        if (action.type === ADD_POST) {
             let newPost: PostsType = {
                 id: 5,
                 message: this._state.profilePage.messageForNewPost,
@@ -110,12 +110,12 @@ export const store: StoreType = {
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.messageForNewPost = ''
             this._onChange()
-        } else if (action.type === "CHANGE_NEW_TEXT") {
+        } else if (action.type === CHANGE_NEW_TEXT) {
             this._state.profilePage.messageForNewPost = action.newText
             this._onChange()
-        } else if (action.type === "ADD_MESSAGE") {
-            this._addMessage()
-        } else if(action.type === "CHANGE_NEW_MESSAGE") {
+        } else if (action.type === ADD_MESSAGE) {
+            this._addMessage()                         //можно делать так
+        } else if(action.type === CHANGE_NEW_MESSAGE) {
             this._state.dialogsPage.newChangeMessage = action.message
             this._onChange()
         }

@@ -6,7 +6,6 @@ import {ActionsTypes, addMessageAC, changeNewMessageAC, DialogsPageType} from ".
 
 
 type DialogsPagePropsType = {
-    newChangeMessage: string
     dialogsPage: DialogsPageType
     dispatch: (action: ActionsTypes) => void
 }
@@ -22,7 +21,7 @@ const Dialogs = (props: DialogsPagePropsType) => {
         />)
 
     let addMessage = () => {
-        props.dispatch(addMessageAC(props.newChangeMessage))
+        props.dispatch(addMessageAC(props.dialogsPage.newChangeMessage))
     }
 
     let onchangeNewMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => props.dispatch(changeNewMessageAC(e.currentTarget.value))
