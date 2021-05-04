@@ -24,8 +24,7 @@ const App = (props: AppPropsType) => {
             <Navbar sidebar={state.sidebar}/>
             <div className='app-wrapper-content'>
                 <Route path={'/dialogs'} render={() => <Dialogs dialogsPage={state.dialogsPage}
-                                                                addMessage={props.store.addMessage.bind(props.store)}
-                                                                changeNewMessage={props.store.changeNewMessage.bind(props.store)}
+                                                                dispatch={props.store.dispatch.bind(props.store)}
 
                 />}/>
                 <Route path={'/profile'} render={() => <Profile profilePage={state.profilePage}

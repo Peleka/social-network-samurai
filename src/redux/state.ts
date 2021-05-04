@@ -1,24 +1,46 @@
 export type StoreType = {
     _state: RootStateType
-    changeNewText: (newText: string) => void
-    // addPost: () => void
-    addMessage: () => void
-    changeNewMessage: (message: string) => void
-    subscribe: (observer: () => void) => void
+    _addMessage: () => void
     _onChange: () => void
+
+    subscribe: (observer: () => void) => void
     getState: () => RootStateType
-    dispatch:(action: ActionsTypes) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
-export type ActionsTypes = AddPostActionType | ChangeNewPostActionType
+// type AddPostActionType = ReturnType<typeof addPostAC>
+// type ChangeNewPostActionType = ReturnType<typeof changeNewPostAC>
 
-type AddPostActionType = {
-    type: "ADD-POST"
+export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewPostAC> | ReturnType<typeof addMessageAC> | ReturnType<typeof changeNewMessageAC>
+
+// type AddPostActionType = {
+//     type: "ADD-POST"
+//     postText: string
+// }
+
+export const addPostAC = (postText: string) => {
+    return {
+        type: "ADD-POST",
+        postText: postText
+    } as const
 }
-
-type ChangeNewPostActionType = {
-    type: "CHANGE_NEW_TEXT"
-    newText: string
+export const changeNewPostAC = (newText: string) => {
+    return {
+        type: "CHANGE_NEW_TEXT",
+        newText: newText
+    } as const
+}
+export const addMessageAC = (messageText: string) => {
+    return {
+        type: "ADD_MESSAGE",
+        messageText: messageText
+    } as const
+}
+export const changeNewMessageAC = (message: string) => {
+    return {
+        type: "CHANGE_NEW_MESSAGE",
+        message: message
+    } as const
 }
 
 export const store: StoreType = {
@@ -64,18 +86,11 @@ export const store: StoreType = {
     subscribe(observer: () => void) {
         this._onChange = observer
     },
-    getState(){
+    getState() {
         return this._state
     },
 
-    changeNewText(newText: string) {
-        this._state.profilePage.messageForNewPost = newText
-        this._onChange()
-    },
-    // addPost() {
-    //
-    // },
-    addMessage() {
+    _addMessage() {
         let newMessage: MessageType = {
             id: 7,
             message: this._state.dialogsPage.newChangeMessage
@@ -84,12 +99,9 @@ export const store: StoreType = {
         this._state.dialogsPage.newChangeMessage = ''
         this._onChange()
     },
-    changeNewMessage(message: string) {
-        this._state.dialogsPage.newChangeMessage = message
-        this._onChange()
-    },
+
     dispatch(action) {
-        if(action.type === "ADD-POST") {
+        if (action.type === "ADD-POST") {
             let newPost: PostsType = {
                 id: 5,
                 message: this._state.profilePage.messageForNewPost,
@@ -98,14 +110,16 @@ export const store: StoreType = {
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.messageForNewPost = ''
             this._onChange()
-        } else if(action.type === "CHANGE_NEW_TEXT") {
+        } else if (action.type === "CHANGE_NEW_TEXT") {
             this._state.profilePage.messageForNewPost = action.newText
+            this._onChange()
+        } else if (action.type === "ADD_MESSAGE") {
+            this._addMessage()
+        } else if(action.type === "CHANGE_NEW_MESSAGE") {
+            this._state.dialogsPage.newChangeMessage = action.message
             this._onChange()
         }
     }
-
-
-
 }
 
 export type PostsType = {
