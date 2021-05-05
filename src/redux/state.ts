@@ -1,8 +1,47 @@
+import dialogsReducer from "./dialogsReducer";
+import profileReducer from "./profileReducer";
+
 const ADD_POST = "ADD-POST"
 const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT"
 const ADD_MESSAGE = "ADD_MESSAGE"
 const CHANGE_NEW_MESSAGE = "CHANGE_NEW_MESSAGE"
 
+
+export type PostsType = {
+    id?: number
+    message: string
+    likesCount: number
+}
+export type DialogsType = {
+    id: number
+    name: string
+}
+export type MessageType = {
+    id: number
+    message: string
+}
+export type ProfilePageType = {
+    messageForNewPost: string
+    posts: Array<PostsType>
+}
+export type DialogsPageType = {
+    newChangeMessage: string
+    dialogs: Array<DialogsType>
+    messages: Array<MessageType>
+}
+export type RootStateType = {
+    profilePage: ProfilePageType
+    dialogsPage: DialogsPageType
+    sidebar: SidebarType
+}
+export type FriendsType = {
+    id?: number
+    name: string
+    ava: string
+}
+export type SidebarType = {
+    friends: Array<FriendsType>
+}
 
 export type StoreType = {
     _state: RootStateType
@@ -13,13 +52,8 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionsTypes) => void
 }
-// type AddPostActionType = ReturnType<typeof addPostAC>
-// type ChangeNewPostActionType = ReturnType<typeof changeNewPostAC>
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewPostAC> | ReturnType<typeof addMessageAC> | ReturnType<typeof changeNewMessageAC>
-// type AddPostActionType = {
-//     type: "ADD-POST"
-//     postText: string
-// }
+
+export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewPostAC> | ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
 
 export const addPostAC = (postText: string) => {
     return {
@@ -39,7 +73,7 @@ export const addMessageAC = (messageText: string) => {
         messageText: messageText
     } as const
 }
-export const changeNewMessageAC = (message: string) => {
+export const updateNewMessageBodyAC = (message: string) => {
     return {
         type: CHANGE_NEW_MESSAGE,
         message: message
@@ -57,7 +91,6 @@ export const store: StoreType = {
                 // {id: 4, message: "My post 4", likesCount: 32},
             ]
         },
-
         dialogsPage: {
             newChangeMessage: '',
             dialogs: [
@@ -65,7 +98,6 @@ export const store: StoreType = {
                 {name: "Andrey", id: 2},
                 {name: "Artem", id: 3}
             ],
-
             messages: [
                 {id: 1, message: 'Hello'},
                 {id: 2, message: 'How are you'},
@@ -73,7 +105,6 @@ export const store: StoreType = {
                 {id: 4, message: 'Good'}
             ]
         },
-
         sidebar: {
             friends: [
                 {id: 1, name: "Dimuch", ava: 'https://www.interfax.ru/ftproot/textphotos/2019/05/17/700gc.jpg'},
@@ -99,61 +130,10 @@ export const store: StoreType = {
         this._state.dialogsPage.messages.push(newMessage)
         this._state.dialogsPage.newChangeMessage = ''
         this._onChange()
-    },                                //можно делать так
+    },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            let newPost: PostsType = {
-                id: 5,
-                message: this._state.profilePage.messageForNewPost,
-                likesCount: 60
-            };
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.messageForNewPost = ''
-            this._onChange()
-        } else if (action.type === CHANGE_NEW_TEXT) {
-            this._state.profilePage.messageForNewPost = action.newText
-            this._onChange()
-        } else if (action.type === ADD_MESSAGE) {
-            this._addMessage()                         //можно делать так
-        } else if(action.type === CHANGE_NEW_MESSAGE) {
-            this._state.dialogsPage.newChangeMessage = action.message
-            this._onChange()
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._onChange()
     }
-}
-
-export type PostsType = {
-    id?: number
-    message: string
-    likesCount: number
-}
-type DialogsType = {
-    id: number
-    name: string
-}
-type MessageType = {
-    id: number
-    message: string
-}
-export type ProfilePageType = {
-    messageForNewPost: string
-    posts: Array<PostsType>
-}
-export type DialogsPageType = {
-    newChangeMessage: string
-    dialogs: Array<DialogsType>
-    messages: Array<MessageType>
-}
-export type RootStateType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
-    sidebar: SidebarType
-}
-export type FriendsType = {
-    id?: number
-    name: string
-    ava: string
-}
-export type SidebarType = {
-    friends: Array<FriendsType>
 }
