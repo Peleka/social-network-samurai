@@ -1,11 +1,8 @@
-import dialogsReducer from "./dialogsReducer";
-import profileReducer from "./profileReducer";
+import {addMessageAC, dialogsReducer, updateNewMessageBodyAC} from "./dialogsReducer";
+import {profileReducer, addPostAC, changeNewPostAC} from "./profileReducer";
+import {sidebarReducer} from "./sidebarReducer";
 
-const ADD_POST = "ADD-POST"
-const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT"
-const ADD_MESSAGE = "ADD_MESSAGE"
-const CHANGE_NEW_MESSAGE = "CHANGE_NEW_MESSAGE"
-
+export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewPostAC> | ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
 
 export type PostsType = {
     id?: number
@@ -43,43 +40,14 @@ export type SidebarType = {
     friends: Array<FriendsType>
 }
 
-export type StoreType = {
+type StoreType = {
     _state: RootStateType
     _addMessage: () => void
     _onChange: () => void
-
     subscribe: (observer: () => void) => void
     getState: () => RootStateType
     dispatch: (action: ActionsTypes) => void
 }
-
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewPostAC> | ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
-
-export const addPostAC = (postText: string) => {
-    return {
-        type: ADD_POST,
-        postText: postText
-    } as const
-}
-export const changeNewPostAC = (newText: string) => {
-    return {
-        type: CHANGE_NEW_TEXT,
-        newText: newText
-    } as const
-}
-export const addMessageAC = (messageText: string) => {
-    return {
-        type: ADD_MESSAGE,
-        messageText: messageText
-    } as const
-}
-export const updateNewMessageBodyAC = (message: string) => {
-    return {
-        type: CHANGE_NEW_MESSAGE,
-        message: message
-    } as const
-}
-
 export const store: StoreType = {
     _state: {
         profilePage: {
@@ -134,6 +102,7 @@ export const store: StoreType = {
     dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._onChange()
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+        this._onChange() //уведомляем подписчиков
     }
 }
