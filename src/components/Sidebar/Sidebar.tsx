@@ -1,7 +1,12 @@
 import React from "react";
 import classes from './Sidebar.module.css'
-import {FriendsType} from "../../redux/store";
 
+
+type FriendsType = {
+    id?: number
+    name: string
+    ava: string
+}
 export const Sidebar = (props: FriendsType) => {
     return (
         <div className={classes.Friends}>

@@ -1,34 +1,40 @@
-import React, {ChangeEvent} from "react";
-import classes from './Dialogs.module.css';
-import DialogItem from "./DilogsItem/DialogsItem";
-import MessagesItem from "./Message/Message";
-import {ActionsTypes, DialogsPageType} from "../../redux/store";
-import {addMessageAC, updateNewMessageBodyAC} from "../../redux/dialogsReducer";
-import Dialogs from "./Dialogs";
-import {StoryType} from "../../redux/redux-store";
+import {addMessageAC, DialogsType, MessageType, updateNewMessageBodyAC} from "../../redux/dialogsReducer";
+import {Dialogs} from "./Dialogs";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {AppStateType} from "../../redux/redux-store";
 
-
-type DialogsPageContainerPropsType = {
-    store: StoryType
+type DialogsPageType = {
+    newChangeMessage: string
+    dialogs: Array<DialogsType>
+    messages: Array<MessageType>
 }
 
-const DialogsContainer = (props: DialogsPageContainerPropsType) => {
-    let state = props.store.getState()
+type MapStateToPropsType = {
+    dialogsPage: DialogsPageType
+}
+type MapDispatchToPropsType = {
+    sendMessageClick: () => void
+    newMessageChange: (body: any) => void
+}
 
-    let sendMessageClick = () => {
-        props.store.dispatch(addMessageAC(state.dialogsPage.newChangeMessage))
+export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        dialogsPage: state.dialogsPage
     }
-
-    let newMessageChange = (body: any) =>
-        props.store.dispatch(updateNewMessageBodyAC(body))
-
-    return (
-        <Dialogs
-            sendMessageClick={sendMessageClick}
-            newMessageChange={newMessageChange}
-            dialogsPage={state.dialogsPage}
-        />
-    )
 }
+
+const mapDispatchToProps = (dispatch: Dispatch) : MapDispatchToPropsType => {
+    return {
+        sendMessageClick: () => {dispatch(addMessageAC())},
+        newMessageChange: (body: any) => {dispatch(updateNewMessageBodyAC(body))}
+
+    }
+}
+
+let DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
 export default DialogsContainer;

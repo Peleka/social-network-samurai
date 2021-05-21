@@ -2,15 +2,10 @@ import React, {ChangeEvent} from "react";
 import classes from './Dialogs.module.css';
 import DialogItem from "./DilogsItem/DialogsItem";
 import MessagesItem from "./Message/Message";
-import {DialogsPageType} from "../../redux/store";
+import {DialogsPropsType} from "./DialogsContainer";
 
-type DialogsPagePropsType = {
-    sendMessageClick: () => void
-    newMessageChange: (value: any) => void
-    dialogsPage: DialogsPageType
-}
 
-const Dialogs = (props: DialogsPagePropsType) => {
+export const Dialogs = (props: DialogsPropsType) => {
 
     let dialogsElement = props.dialogsPage.dialogs
         .map(d => <DialogItem name={d.name} id={d.id}/>)
@@ -23,7 +18,6 @@ const Dialogs = (props: DialogsPagePropsType) => {
     let onSendMessageClick = () => {
         props.sendMessageClick()
     }
-
 
     let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value
@@ -48,5 +42,3 @@ const Dialogs = (props: DialogsPagePropsType) => {
         </div>
     )
 }
-
-export default Dialogs;

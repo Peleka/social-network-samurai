@@ -1,9 +1,8 @@
 import React from "react";
 import classes from './Post.module.css';
-import {PostsType} from "../../../../redux/store";
 
 
-const Post = (props: PostsType) => {
+const Post = (props: any) => {
     return (
         <div className={classes.item}>
             <img className={classes.avatar}

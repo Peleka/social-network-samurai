@@ -1,45 +1,64 @@
-import {ActionsTypes, DialogsPageType, MessageType} from "./store";
+import {ActionsTypes} from "./redux-store";
+
 
 const ADD_MESSAGE = "ADD_MESSAGE"
 const CHANGE_NEW_MESSAGE = "CHANGE_NEW_MESSAGE"
 
-let initialState: DialogsPageType = {
-    newChangeMessage: '',
+export type DialogsType = {
+    id: number
+    name: string
+}
+export type MessageType = {
+    id: number
+    message: string
+}
+
+const initialState = {
     dialogs: [
         {name: "Dimuch", id: 1},
         {name: "Andrey", id: 2},
         {name: "Artem", id: 3}
-    ],
+    ] as Array<DialogsType>,
+
     messages: [
         {id: 1, message: 'Hello'},
         {id: 2, message: 'How are you'},
         {id: 3, message: 'Fine'},
         {id: 4, message: 'Good'}
-    ]
+    ] as Array<MessageType>,
+    newChangeMessage: ''
 }
 
-export const dialogsReducer = (state = initialState, action: ActionsTypes): DialogsPageType => {
+export type InitialStateType = typeof initialState
+
+
+export const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case ADD_MESSAGE:
+        case ADD_MESSAGE: {
             let newMessage: MessageType = {
                 id: 7,
                 message: state.newChangeMessage
             }
-            state.messages.push(newMessage)
-            state.newChangeMessage = ''
-            return state
-        case CHANGE_NEW_MESSAGE:
-            state.newChangeMessage = action.message
-            return state;
+            return {
+                ...state,
+                messages: [...state.messages, newMessage],
+                newChangeMessage: ''
+            }
+        }
+        case CHANGE_NEW_MESSAGE: {
+            return {
+                ...state,
+                newChangeMessage: action.message
+            }
+        }
         default:
             return state
     }
 }
 
-export const addMessageAC = (messageText: string) => {
+export const addMessageAC = () => {
     return {
-        type: ADD_MESSAGE,
-        messageText: messageText
+        type: ADD_MESSAGE
     } as const
 }
 export const updateNewMessageBodyAC = (message: string) => {

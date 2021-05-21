@@ -4,11 +4,7 @@ import { NavLink } from "react-router-dom";
 import {Sidebar} from "../Sidebar/Sidebar";
 import {StoryType} from "../../redux/redux-store";
 
-type NavbarPropsType = {
-    store: StoryType
-}
-
-const Navbar = (props: NavbarPropsType) => {
+const Navbar = () => {
     return (
         <nav className={classes.nav}>
             <div className={classes.item}>
@@ -27,8 +23,9 @@ const Navbar = (props: NavbarPropsType) => {
                 <NavLink to={"/settings"} activeClassName={classes.active}>Settings</NavLink>
             </div>
             <div className={classes.BestFriends}>{
-                props.store.getState().sidebar.friends.map(f => <Sidebar name={f.name} key={f.id} ava={f.ava}/>)
-            }</div>
+
+                // props.store.getState().sidebar.friends.map(f => <Sidebar name={f.name} key={f.id} ava={f.ava}/>)
+            }sidebar</div>
         </nav>
     )
 }
