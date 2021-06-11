@@ -3,21 +3,21 @@ import {addPostAC, changeNewPostAC, profileReducer} from "./profileReducer";
 import {addMessageAC, dialogsReducer, updateNewMessageBodyAC} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
 import {
-    followAC,
-    setCurrentPageAC,
-    setIsFetchingAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unfollowAC,
+    follow,
+    setCurrentPage,
+    setIsFetching,
+    setTotalUsersCount,
+    setUsers,
+    unfollow,
     usersReducer
 } from "./usersReducer";
 
 export type ActionsTypes = ReturnType<typeof addPostAC>
     | ReturnType<typeof changeNewPostAC>
     | ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
-    | ReturnType<typeof followAC> | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof setUsersAC> | ReturnType<typeof setCurrentPageAC> | ReturnType<typeof setTotalUsersCountAC>
-    | ReturnType<typeof setIsFetchingAC>
+    | ReturnType<typeof follow> | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof setIsFetching>
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
