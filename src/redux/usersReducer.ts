@@ -5,6 +5,7 @@ const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET_USERS"
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
+const SET_IS_FETCHING = "SET_IS_FETCHING"
 
 // type LocationType = {
 //     city: string
@@ -31,6 +32,7 @@ let initialState = {
     pageSize: 5,
     totalUsersCount: 20,
     currentPage: 1,
+    isFetching: true,
 }
 
 export type InitialStateType = typeof initialState
@@ -69,6 +71,11 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
             return {
                 ...state, totalUsersCount: action.count
             }
+        case SET_IS_FETCHING:
+            return {
+                ...state, isFetching: action.isFetching
+            }
+
         default:
             return state
     }
@@ -79,3 +86,4 @@ export const unfollowAC = (userID: number) => ({type: UNFOLLOW, userID} as const
 export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
 export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 export const setTotalUsersCountAC = (totalUsersCount: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount} as const)
+export const setIsFetchingAC = (isFetching: boolean) => ({type: SET_IS_FETCHING, isFetching} as const)
