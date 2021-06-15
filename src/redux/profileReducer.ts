@@ -38,7 +38,7 @@ let initialState = {
         {id: 1, message: "My post 1", likesCount: 15},
         {id: 2, message: "My post 2", likesCount: 30}
     ] as Array<PostsType>,
-    profile: {} as ProfileType
+    profile: null  as null | ProfileType
 }
 
 export type InitialStateType = typeof initialState
