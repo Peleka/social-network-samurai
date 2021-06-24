@@ -8,7 +8,7 @@ import {DialogsPropsType} from "./DialogsContainer";
 export const Dialogs = (props: DialogsPropsType) => {
 
     let dialogsElement = props.dialogsPage.dialogs
-        .map(d => <DialogItem name={d.name} id={d.id}/>)
+        .map(d => <DialogItem key={d.id}  name={d.name} id={d.id}/>)
 
     let messagesElement = props.dialogsPage.messages
         .map(m => <MessagesItem id={m.id}

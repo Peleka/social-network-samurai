@@ -31,7 +31,6 @@ type ProfilePhotosType = {
     large: string
 }
 
-
 let initialState = {
     messageForNewPost: "" as string,
     posts: [
