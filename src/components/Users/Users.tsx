@@ -13,6 +13,8 @@ type UsersPropsType = {
     follow: (id: number) => void
     unfollow: (id: number) => void
     usersPage: InitialStateType
+    isFollowingInProgress: Array<number>
+    followingInProgress: (isFetching: boolean, id: number)=> void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -47,22 +49,26 @@ const Users = (props: UsersPropsType) => {
                         </div>
                         <div>
                             {u.followed
-                                ? <button onClick={() => {
+                                ? <button disabled={props.isFollowingInProgress.some(id => id === u.id)} onClick={() => {
+                                    props.followingInProgress(true, u.id)
                                     usersAPI.unFollowUser(u.id)
                                         .then(data => {
                                             if (data.resultCode === 0) {
                                                 props.unfollow(u.id)
                                             }
+                                            props.followingInProgress(false, u.id)
                                         })
                                 }}>
                                     Unfollow
                                 </button>
-                                : <button onClick={() => {
+                                : <button  disabled={props.isFollowingInProgress.some(id => id === u.id)} onClick={() => {
+                                    props.followingInProgress(true, u.id)
                                     usersAPI.followUser(u.id)
                                         .then(data => {
                                             if (data.resultCode === 0) {
                                                 props.follow(u.id)
                                             }
+                                            props.followingInProgress(false, u.id)
                                         })
                                 }}>
                                     Follow

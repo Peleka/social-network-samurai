@@ -6,6 +6,7 @@ const SET_USERS = "SET_USERS"
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
 const SET_IS_FETCHING = "SET_IS_FETCHING"
+const FOLLOWING_IN_PROGRESS = "FOLLOWING_IN_PROGRESS"
 
 // type LocationType = {
 //     city: string
@@ -29,10 +30,11 @@ export type UserType = {
 
 let initialState = {
     users: [] as Array<UserType>,
-    pageSize: 5,
-    totalUsersCount: 20,
-    currentPage: 1,
-    isFetching: true,
+    pageSize: 5 as number,
+    totalUsersCount: 20 as number,
+    currentPage: 1 as number,
+    isFetching: true as boolean,
+    isFollowingInProgress: [] as Array<any>
 }
 
 export type InitialStateType = typeof initialState
@@ -75,6 +77,13 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
             return {
                 ...state, isFetching: action.isFetching
             }
+        case FOLLOWING_IN_PROGRESS:
+            return {
+                ...state,
+                isFollowingInProgress:  action.isFetching
+                    ?  [...state.isFollowingInProgress, action.id]
+                    : state.isFollowingInProgress.filter(id => id !== action.id)
+            }
         default:
             return state
     }
@@ -86,3 +95,4 @@ export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users} as
 export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 export const setTotalUsersCount = (totalUsersCount: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount} as const)
 export const setIsFetching = (isFetching: boolean) => ({type: SET_IS_FETCHING, isFetching} as const)
+export const toggleFollowingInProgress = (isFetching: boolean, id: number) => ({type: FOLLOWING_IN_PROGRESS, isFetching, id} as const)
