@@ -1,4 +1,5 @@
-import {ActionsTypes} from "./redux-store"
+import {ActionsTypes, AppDispatch} from "./redux-store"
+import {usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST"
 const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT"
@@ -37,7 +38,7 @@ let initialState = {
         {id: 1, message: "My post 1", likesCount: 15},
         {id: 2, message: "My post 2", likesCount: 30}
     ] as Array<PostsType>,
-    profile: null  as null | ProfileType
+    profile: null as null | ProfileType
 }
 
 export type InitialStateType = typeof initialState
@@ -85,3 +86,10 @@ export const changeNewPostAC = (newText: string) => {
     } as const
 }
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
+//уже не сэтаем
+export const getUsersProfileThunkCreator = (userId: string) => (dispatch: AppDispatch) => {
+    usersAPI.getProfile(userId)
+        .then(response => {
+            dispatch(setUserProfile(response.data))
+        })
+}
