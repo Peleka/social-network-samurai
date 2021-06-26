@@ -5,6 +5,7 @@ import {ProfileType} from "../../redux/profileReducer";
 
 type ProfilePropsType = {
     profile: null | ProfileType
+    isAuth: boolean
 }
 
 const Profile = (props: ProfilePropsType) => {

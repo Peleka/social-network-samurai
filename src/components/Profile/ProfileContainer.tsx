@@ -3,7 +3,7 @@ import React from "react";
 import Profile from "./Profile";
 import {getUsersProfileThunkCreator, ProfileType} from "../../redux/profileReducer";
 import {AppStateType} from "../../redux/redux-store";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 
 type PathParamsType = {
     userId: string
@@ -11,6 +11,7 @@ type PathParamsType = {
 
 type MapStatePropsType = {
     profile: null | ProfileType
+    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -31,6 +32,7 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     render() {
+        if(!this.props.isAuth) return <Redirect to={'/login'}/>
         return (
             <Profile {...this.props} profile={this.props.profile}/>
         )
@@ -38,7 +40,8 @@ class ProfileContainer extends React.Component<PropsType> {
 }
 
 let mapStateToProps = (state: AppStateType) => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
 
 let withUrlDataContainerComponent = withRouter(ProfileContainer) //вернет компоненту , в нее данные из url придут
