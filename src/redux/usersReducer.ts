@@ -1,4 +1,5 @@
-import {ActionsTypes} from "./redux-store"
+import {ActionsTypes, AppDispatch} from "./redux-store"
+import {usersAPI} from "../api/api";
 
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
@@ -80,8 +81,8 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
         case FOLLOWING_IN_PROGRESS:
             return {
                 ...state,
-                isFollowingInProgress:  action.isFetching
-                    ?  [...state.isFollowingInProgress, action.id]
+                isFollowingInProgress: action.isFetching
+                    ? [...state.isFollowingInProgress, action.id]
                     : state.isFollowingInProgress.filter(id => id !== action.id)
             }
         default:
@@ -93,6 +94,54 @@ export const follow = (userID: number) => ({type: FOLLOW, userID} as const)
 export const unfollow = (userID: number) => ({type: UNFOLLOW, userID} as const)
 export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
 export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
-export const setTotalUsersCount = (totalUsersCount: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount} as const)
+export const setTotalUsersCount = (totalUsersCount: number) => ({
+    type: SET_TOTAL_USERS_COUNT,
+    count: totalUsersCount
+} as const)
 export const setIsFetching = (isFetching: boolean) => ({type: SET_IS_FETCHING, isFetching} as const)
-export const toggleFollowingInProgress = (isFetching: boolean, id: number) => ({type: FOLLOWING_IN_PROGRESS, isFetching, id} as const)
+export const toggleFollowingInProgress = (isFetching: boolean, id: number) => ({
+    type: FOLLOWING_IN_PROGRESS,
+    isFetching,
+    id
+} as const)
+
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: AppDispatch) => {
+        dispatch(setIsFetching(true));
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                // debugger
+                dispatch(setIsFetching(false))
+                dispatch(setUsers(data.items))
+                //временно в комменте, чтобы не выводило миллион страниц
+                // dispatch(setTotalUsersCount(response.data.totalCount))
+            })
+    }
+}
+
+export const unfollowThunkCreator = (id: number) => {
+    return (dispatch: AppDispatch) => {
+        dispatch(toggleFollowingInProgress(true, id));
+        usersAPI.unFollowUser(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unfollow(id))
+                }
+                dispatch(toggleFollowingInProgress(false, id))
+            })
+    }
+}
+
+export const followThunkCreator = (id: number) => {
+    return (dispatch: AppDispatch) => {
+        dispatch(toggleFollowingInProgress(true, id));
+        usersAPI.followUser(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(follow(id))
+                }
+                dispatch(toggleFollowingInProgress(false, id))
+            })
+    }
+}

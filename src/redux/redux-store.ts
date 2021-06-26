@@ -1,4 +1,4 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {addPostAC, changeNewPostAC, profileReducer, setUserProfile} from "./profileReducer";
 import {addMessageAC, dialogsReducer, updateNewMessageBodyAC} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
@@ -12,6 +12,7 @@ import {
     usersReducer
 } from "./usersReducer";
 import {authReducer, setAuthUserData} from "./authReducer";
+import thunkMiddleware from "redux-thunk";
 
 export type ActionsTypes = ReturnType<typeof addPostAC>
     | ReturnType<typeof changeNewPostAC>
@@ -33,7 +34,8 @@ export type AppStateType = ReturnType<typeof rootReducer>
 
 export type StoryType = typeof store
 
+export type AppDispatch = typeof store.dispatch;
 
-export let store = createStore(rootReducer)
+export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 //rootReducer возвращает нам тип всего приложения
