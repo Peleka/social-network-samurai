@@ -1,9 +1,10 @@
 import {ActionsTypes, AppDispatch} from "./redux-store"
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST"
 const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
+const SET_STATUS = "SET_STATUS"
 
 export type PostsType = {
     id?: number
@@ -38,7 +39,8 @@ let initialState = {
         {id: 1, message: "My post 1", likesCount: 15},
         {id: 2, message: "My post 2", likesCount: 30}
     ] as Array<PostsType>,
-    profile: null as null | ProfileType
+    profile: null as null | ProfileType,
+    status: "" as string
 }
 
 export type InitialStateType = typeof initialState
@@ -69,6 +71,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                 profile: action.profile
             }
         }
+        case SET_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
         default:
             return state
     }
@@ -85,11 +93,29 @@ export const changeNewPostAC = (newText: string) => {
         newText: newText
     } as const
 }
+
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
 //уже не сэтаем
 export const getUsersProfileThunkCreator = (userId: string) => (dispatch: AppDispatch) => {
     usersAPI.getProfile(userId)
         .then(response => {
             dispatch(setUserProfile(response.data))
+        })
+}
+
+export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const getStatusThunkCreator = (userId: string) => (dispatch: AppDispatch) => {
+    profileAPI.getStatus(userId)
+        .then(response => {
+            dispatch(setStatus(response.data))
+        })
+}
+
+export const updateStatusThunkCreator = (status: string) => (dispatch: AppDispatch) => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
         })
 }

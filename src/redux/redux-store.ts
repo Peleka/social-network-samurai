@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {addPostAC, changeNewPostAC, profileReducer, setUserProfile} from "./profileReducer";
+import {addPostAC, changeNewPostAC, profileReducer, setStatus, setUserProfile} from "./profileReducer";
 import {addMessageAC, dialogsReducer, updateNewMessageBodyAC} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
 import {
@@ -20,7 +20,7 @@ export type ActionsTypes = ReturnType<typeof addPostAC>
     | ReturnType<typeof follow> | ReturnType<typeof unfollow>
     | ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof setIsFetching> | ReturnType<typeof setUserProfile> | ReturnType<typeof setAuthUserData>
-    | ReturnType<typeof toggleFollowingInProgress>
+    | ReturnType<typeof toggleFollowingInProgress> | ReturnType<typeof setStatus>
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,

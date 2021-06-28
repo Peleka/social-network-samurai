@@ -26,10 +26,24 @@ export const usersAPI = {
             })
     },
     getProfile(userId: string) {
+        console.warn('Please profileAPI object') //чтобы избежать дублир кода написали ворнинг и ретург на нужный метод чтобы ничего не сломалось
+        return profileAPI.getProfile(userId)
+    }
+}
+
+export const profileAPI = {
+     getProfile(userId: string) {
         return instance
             .get(`profile/` + userId)
+    },
+    getStatus(userId: string) {
+         return instance
+             .get(`profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+         return instance
+             .put(`profile/status/`, {status: status }) // properties смотрим в доке api
     }
-
 }
 
 export const authAPI = {
