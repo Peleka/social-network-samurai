@@ -5,6 +5,7 @@ import {getUsersProfileThunkCreator, ProfileType} from "../../redux/profileReduc
 import {AppStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type PathParamsType = {
     userId: string
@@ -38,10 +39,17 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 }
 
-let mapStateToProps = (state: AppStateType):MapStatePropsType => ({
+let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile
 })
 
-let withUrlDataContainerComponent = withRouter(ProfileContainer) //вернет компоненту , в нее данные из url придут
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {getUsersProfileThunkCreator}),
+    withRouter,
+    withAuthRedirect
+)(ProfileContainer)
 
-export default withAuthRedirect(connect(mapStateToProps, {getUsersProfileThunkCreator})(withUrlDataContainerComponent)); // связывает со store
+//
+// let withUrlDataContainerComponent = withRouter(ProfileContainer) //вернет компоненту , в нее данные из url придут
+//
+// export default withAuthRedirect(connect(mapStateToProps, {getUsersProfileThunkCreator})(withUrlDataContainerComponent)); // связывает со store
