@@ -63,7 +63,7 @@ export default compose<React.ComponentType>(
         getStatusThunkCreator, updateStatusThunkCreator //не сам санккреэтор передаем а создается в памяти отдельная функция колбек 73урок 33:22 время
     }),
     withRouter,
-    withAuthRedirect
+    // withAuthRedirect
 )(ProfileContainer)
 
 //

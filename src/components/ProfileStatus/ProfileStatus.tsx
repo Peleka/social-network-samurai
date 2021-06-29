@@ -23,17 +23,28 @@ class ProfileStatus extends React.Component<any, any> {
         this.setState({
             editMode: false
         });
-          // this.props.updateStatus(this.statusInputRef.current.value)
+        // this.props.updateStatus(this.statusInputRef.current.value)
         this.props.updateStatus(this.state.status)
     }
 
-    onStatusChange = (e: any)=> {
-       this.setState({
-           status: e.currentTarget.value
-       })
+    onStatusChange = (e: any) => {
+        this.setState({
+            status: e.currentTarget.value
+        })
     }
 
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+        console.log('componentDidUpdate')
+    }
+
+
     render() {
+        console.log('render')
         return (
             <div>
                 {
