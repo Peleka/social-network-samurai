@@ -30,7 +30,7 @@ let rootReducer = combineReducers({
     auth: authReducer,
 })
 
-export type AppStateType = ReturnType<typeof rootReducer>
+export type AppStateType = ReturnType<typeof rootReducer> //rootReducer возвращает нам тип всего приложения
 
 export type StoryType = typeof store
 
@@ -38,4 +38,5 @@ export type AppDispatch = typeof store.dispatch;
 
 export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
-//rootReducer возвращает нам тип всего приложения
+//@ts-ignore
+window.store = store
