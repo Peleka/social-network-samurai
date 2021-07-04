@@ -1,4 +1,4 @@
-import {addMessageAC, DialogsType, MessageType, updateNewMessageBodyAC} from "../../redux/dialogsReducer";
+import {addMessageAC, DialogsType, MessageType} from "../../redux/dialogsReducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
@@ -7,7 +7,6 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import React from "react";
 
 type DialogsPageType = {
-    newChangeMessage: string
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
 }
@@ -16,8 +15,7 @@ type MapStateToPropsType = {
     dialogsPage: DialogsPageType
 }
 type MapDispatchToPropsType = {
-    sendMessageClick: () => void
-    newMessageChange: (body: any) => void
+    sendMessageClick: (newMessage: string) => void
 }
 
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -31,13 +29,9 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        sendMessageClick: () => {
-            dispatch(addMessageAC())
-        },
-        newMessageChange: (body: any) => {
-            dispatch(updateNewMessageBodyAC(body))
+        sendMessageClick: (newMessage: string) => {
+            dispatch(addMessageAC(newMessage))
         }
-
     }
 }
 

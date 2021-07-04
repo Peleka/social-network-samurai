@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {addPostAC, changeNewPostAC, profileReducer, setStatus, setUserProfile} from "./profileReducer";
-import {addMessageAC, dialogsReducer, updateNewMessageBodyAC} from "./dialogsReducer";
+import {addPostAC, profileReducer, setStatus, setUserProfile} from "./profileReducer";
+import {addMessageAC, dialogsReducer} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
 import {
     follow, toggleFollowingInProgress,
@@ -16,8 +16,7 @@ import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
 
 export type ActionsTypes = ReturnType<typeof addPostAC>
-    | ReturnType<typeof changeNewPostAC>
-    | ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof addMessageAC>
     | ReturnType<typeof follow> | ReturnType<typeof unfollow>
     | ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof setIsFetching> | ReturnType<typeof setUserProfile> | ReturnType<typeof setAuthUserData>

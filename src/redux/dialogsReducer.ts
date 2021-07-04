@@ -1,8 +1,6 @@
 import {ActionsTypes} from "./redux-store";
 
-
 const ADD_MESSAGE = "ADD_MESSAGE"
-const CHANGE_NEW_MESSAGE = "CHANGE_NEW_MESSAGE"
 
 export type DialogsType = {
     id: number
@@ -26,7 +24,6 @@ const initialState = {
         {id: 3, message: 'Fine'},
         {id: 4, message: 'Good'}
     ] as Array<MessageType>,
-    newChangeMessage: ''
 }
 
 export type InitialStateType = typeof initialState
@@ -37,18 +34,11 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
         case ADD_MESSAGE: {
             let newMessage: MessageType = {
                 id: 7,
-                message: state.newChangeMessage
+                message: action.newMessage
             }
             return {
                 ...state,
                 messages: [...state.messages, newMessage],
-                newChangeMessage: ''
-            }
-        }
-        case CHANGE_NEW_MESSAGE: {
-            return {
-                ...state,
-                newChangeMessage: action.message
             }
         }
         default:
@@ -56,14 +46,9 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
     }
 }
 
-export const addMessageAC = () => {
+export const addMessageAC = (newMessage: string) => {
     return {
-        type: ADD_MESSAGE
-    } as const
-}
-export const updateNewMessageBodyAC = (message: string) => {
-    return {
-        type: CHANGE_NEW_MESSAGE,
-        message: message
+        type: ADD_MESSAGE,
+        newMessage
     } as const
 }

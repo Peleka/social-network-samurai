@@ -2,7 +2,6 @@ import {ActionsTypes, AppDispatch} from "./redux-store"
 import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST"
-const CHANGE_NEW_TEXT = "CHANGE_NEW_TEXT"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_STATUS = "SET_STATUS"
 
@@ -11,7 +10,6 @@ export type PostsType = {
     message: string
     likesCount: number
 }
-
 export type ProfileType = {
     aboutMe: string
     contacts: ProfileContactsType
@@ -34,7 +32,6 @@ type ProfilePhotosType = {
 }
 
 let initialState = {
-    messageForNewPost: "" as string,
     posts: [
         {id: 1, message: "My post 1", likesCount: 15},
         {id: 2, message: "My post 2", likesCount: 30}
@@ -50,19 +47,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
         case ADD_POST: {
             let newPost: PostsType = {
                 id: 5,
-                message: state.messageForNewPost,
+                message: action.messageForNewPost,
                 likesCount: 60
             };
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                messageForNewPost: ''
-            }
-        }
-        case CHANGE_NEW_TEXT: {
-            return {
-                ...state,
-                messageForNewPost: action.newText
             }
         }
         case SET_USER_PROFILE: {
@@ -82,15 +72,10 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
     }
 }
 
-export const addPostAC = () => {
+export const addPostAC = (messageForNewPost: string) => {
     return {
-        type: ADD_POST
-    } as const
-}
-export const changeNewPostAC = (newText: string) => {
-    return {
-        type: CHANGE_NEW_TEXT,
-        newText: newText
+        type: ADD_POST,
+        messageForNewPost
     } as const
 }
 
