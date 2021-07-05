@@ -1,5 +1,6 @@
 import {ActionsTypes, AppDispatch} from "./redux-store"
-import {usersAPI} from "../api/api";
+import {authAPI, usersAPI} from "../api/api";
+import {setAuthUserData} from "./authReducer";
 
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
@@ -34,7 +35,7 @@ let initialState = {
     pageSize: 5 as number,
     totalUsersCount: 20 as number,
     currentPage: 1 as number,
-    isFetching: true as boolean,
+    isFetching: true as boolean, //крутила
     isFollowingInProgress: [] as Array<any>
 }
 
