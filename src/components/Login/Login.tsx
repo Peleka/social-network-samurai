@@ -6,6 +6,8 @@ import {connect} from "react-redux";
 import {login} from "../../redux/authReducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
+import classes from './../common/FormsControls/FormsControls.module.css'
+import {Simulate} from "react-dom/test-utils";
 
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
@@ -32,6 +34,8 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                        name={"rememberMe"}
                 />
             </div>
+            {props.error && <div className={classes.formCommonError}>{props.error}</div>}
+
             <div>
                 <button>Login</button>
             </div>
