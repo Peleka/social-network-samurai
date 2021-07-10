@@ -14,13 +14,14 @@ import {
 import {authReducer, setAuthUserData} from "./authReducer";
 import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
+import {initializedSuccessAC, appReducer} from "./appReducer";
 
 export type ActionsTypes = ReturnType<typeof addPostAC>
     | ReturnType<typeof addMessageAC>
     | ReturnType<typeof follow> | ReturnType<typeof unfollow>
     | ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof setIsFetching> | ReturnType<typeof setUserProfile> | ReturnType<typeof setAuthUserData>
-    | ReturnType<typeof toggleFollowingInProgress> | ReturnType<typeof setStatus>
+    | ReturnType<typeof toggleFollowingInProgress> | ReturnType<typeof setStatus> | ReturnType<typeof initializedSuccessAC>
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -29,6 +30,7 @@ let rootReducer = combineReducers({
     users: usersReducer,
     auth: authReducer,
     form: formReducer, //обязательно д.б. названо form
+    app: appReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer> //rootReducer возвращает нам тип всего приложения

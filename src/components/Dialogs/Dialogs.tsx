@@ -14,8 +14,10 @@ export const Dialogs = (props: DialogsPropsType) => {
         .map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
 
     let messagesElement = props.dialogsPage.messages
-        .map(m => <MessagesItem id={m.id}
-                                message={m.message}
+        .map(m => <MessagesItem
+            key={m.id}
+            id={m.id}
+            message={m.message}
         />)
 
     const addNewMessage = (newMessage: FormDataType) => {
