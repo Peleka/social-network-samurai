@@ -1,6 +1,5 @@
 import {ActionsTypes, AppDispatch} from "./redux-store"
-import {authAPI, usersAPI} from "../api/api";
-import {setAuthUserData} from "./authReducer";
+import {usersAPI} from "../api/api";
 
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"

@@ -1,15 +1,18 @@
 import React from "react";
-import {InjectedFormProps, reduxForm, Field} from "redux-form";
-import { required } from "../../utils/validator";
-import { Input } from "../common/FormsControls/FormsControls";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {required} from "../../utils/validator";
+import {Input} from "../common/FormsControls/FormsControls";
 import {connect} from "react-redux";
 import {login} from "../../redux/authReducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
 import classes from './../common/FormsControls/FormsControls.module.css'
-import {Simulate} from "react-dom/test-utils";
 
-
+type FormDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
@@ -43,12 +46,13 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     )
 }
 
-//оборачиваем с пом нос reduxForm
+//оборачиваем с пом hос reduxForm
 const LoginReduxForm = reduxForm<FormDataType>({
     // a unique name for the form
     form: 'login'
 })(LoginForm)
 //@ts-ignore
+
 const Login = (props) => {
     const onSubmit = (formData: FormDataType) => {
         //тут из пропсов connect нам достает ф-цию login, которая внутри себя диспатчит вызов loginTC
@@ -63,12 +67,6 @@ const Login = (props) => {
             <LoginReduxForm onSubmit={onSubmit}/>
         </div>
     )
-}
-
-type FormDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
 }
 
 const mapStateToProps = (state: AppStateType) => {

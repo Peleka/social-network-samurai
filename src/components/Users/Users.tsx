@@ -1,7 +1,7 @@
 import React from "react";
 import s from './Users.module.css'
 import userPhoto from '../../assets/images/user.jpg'
-import {InitialStateType} from "../../redux/usersReducer";
+import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
@@ -9,7 +9,7 @@ type UsersPropsType = {
     pageSize: number
     currentPage: number
     onPageChanged: (p: number) => void
-    usersPage: InitialStateType
+    usersPage: Array<UserType>
     isFollowingInProgress: Array<number>
     unfollowThunkCreator: (id: number) => void
     followThunkCreator: (id: number) => void
@@ -33,7 +33,7 @@ const Users = (props: UsersPropsType) => {
             })}
         </div>
         {
-            props.usersPage.users.map(u =>
+            props.usersPage.map(u =>
                 <div key={u.id}>
                     <div>
                         <div>

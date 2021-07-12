@@ -1,9 +1,13 @@
 import {connect} from "react-redux";
 import {
-    follow, toggleFollowingInProgress,
-    InitialStateType,
+    follow,
+    followThunkCreator,
+    getUsersThunkCreator,
     setCurrentPage,
-    unfollow, getUsersThunkCreator, unfollowThunkCreator, followThunkCreator
+    toggleFollowingInProgress,
+    unfollow,
+    unfollowThunkCreator,
+    UserType
 } from "../../redux/usersReducer";
 import {AppStateType} from "../../redux/redux-store";
 import React from "react";
@@ -35,7 +39,7 @@ class UsersContainer extends React.Component<UsersPropsType, AppStateType> {
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
-                usersPage={this.props.usersPage}
+                usersPage={this.props.users}
                 isFollowingInProgress={this.props.isFollowingInProgress}
                 followThunkCreator={this.props.followThunkCreator}
                 unfollowThunkCreator={this.props.unfollowThunkCreator}
@@ -45,7 +49,7 @@ class UsersContainer extends React.Component<UsersPropsType, AppStateType> {
 }
 
 type MapStatePropsType = {
-    usersPage: InitialStateType
+    users: Array<UserType>
     pageSize: number
     totalUsersCount: number
     currentPage: number
@@ -67,7 +71,7 @@ export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        usersPage: state.users,
+        users: state.users.users,
         pageSize: state.users.pageSize,
         totalUsersCount: state.users.totalUsersCount,
         currentPage: state.users.currentPage,
