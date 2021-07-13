@@ -1,7 +1,7 @@
 import React from "react";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileType} from "../../../redux/profileReducer";
-import ProfileStatus from "../../ProfileStatus/ProfileStatus";
+import ProfileStatusWithHooks from "../../ProfileStatus/ProfileStatusWithHooks";
 
 type ProfileInfoPropsType = {
     profile: null | ProfileType //пофиксить тут boolean?
@@ -23,7 +23,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
 
             <div>
                 <img src={props.profile.photos.large} alt={'avatarka'}/>
-                <ProfileStatus
+                <ProfileStatusWithHooks
                     status={props.status}
                     updateStatus={props.updateStatus}
                 />

@@ -34,6 +34,7 @@ class UsersContainer extends React.Component<UsersPropsType, AppStateType> {
     }
 
     render() {
+        console.log('render users')
         let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
         let pages = [];
         for (let i = 1; i <= pagesCount; i++) {
@@ -78,6 +79,7 @@ type MapDispatchPropsType = {
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    console.log('mstp')
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
