@@ -2,6 +2,7 @@ import {ActionsTypes, AppDispatch} from "./redux-store"
 import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST"
+const DELETE_POST = "DELETE_POST"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_STATUS = "SET_STATUS"
 
@@ -67,6 +68,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                 status: action.status
             }
         }
+        case DELETE_POST: {
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id != action.postId)
+            }
+        }
         default:
             return state
     }
@@ -78,7 +85,7 @@ export const addPostAC = (messageForNewPost: string) => {
         messageForNewPost
     } as const
 }
-
+export const deletePostAC = (postId: any) => ({type: DELETE_POST, postId} as const)
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
 //уже не сэтаем
 export const getUsersProfileThunkCreator = (userId: string) => (dispatch: AppDispatch) => {

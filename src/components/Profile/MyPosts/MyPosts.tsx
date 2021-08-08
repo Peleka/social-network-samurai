@@ -8,8 +8,9 @@ import {maxLengthCreator, required} from "../../../utils/validator";
 
 
 const MyPosts = (props: MyPostPropsType) => {
-    let postsElement = props.posts.map(p =>
-        <Post key={p.id}
+    console.log("My Post RENDER")
+    let postsElement = props.posts.map((p, index) =>
+        <Post key={index}
               message={p.message}
               likesCount={p.likesCount}/>
     )
