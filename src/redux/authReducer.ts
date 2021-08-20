@@ -33,38 +33,31 @@ export const setAuthUserData = (id: number, email: string, login: string, isAuth
     payload: {id, email, login, isAuth}
 } as const)
 
-export const getAuthUserData = () => (dispatch: Dispatch<ActionsTypes>) => {
-   return authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                let {id, email, login} = response.data.data
-                dispatch(setAuthUserData(id, email, login, true))
-            }
-        })
+export const getAuthUserData = () => async (dispatch: Dispatch<ActionsTypes>) => {
+    let response = await authAPI.me();
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data
+        dispatch(setAuthUserData(id, email, login, true))
+    }
 } //это ThunkCreator
 
-export const login = (email: string, password:string, rememberMe:boolean) => (dispatch: AppDispatch) => {
-    authAPI.login(email, password, rememberMe)
-        .then((response) => {
-            if ( response.data.resultCode === 0) {
-                //@ts-ignore
-                dispatch(getAuthUserData())
-            }else {
-                let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some Error"
-                //@ts-ignore
-                dispatch(stopSubmit("login", {_error: message}))
-            }
-        })
+export const login = (email: string, password: string, rememberMe: boolean) => async (dispatch: AppDispatch) => {
+    let response = await authAPI.login(email, password, rememberMe);
+    if (response.data.resultCode === 0) {
+        //@ts-ignore
+        dispatch(getAuthUserData())
+    } else {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some Error"
+        //@ts-ignore
+        dispatch(stopSubmit("login", {_error: message}))
+    }
 }
 
-export const logOut = () => (dispatch: Dispatch) => {
-    authAPI.logout()
-        .then((response) => {
-            if ( response.data.resultCode === 0) {
-                //@ts-ignore
-                dispatch(setAuthUserData(null, null, null, false))
-
-            }
-        })
+export const logOut = () => async (dispatch: Dispatch) => {
+    let response = await authAPI.logout()
+    if (response.data.resultCode === 0) {
+        //@ts-ignore
+        dispatch(setAuthUserData(null, null, null, false))
+    }
 }
 

@@ -34,7 +34,8 @@ let rootReducer = combineReducers({
     app: appReducer
 })
 
-export type AppStateType = ReturnType<typeof rootReducer> //rootReducer возвращает нам тип всего приложения
+export type AppStateType = ReturnType<typeof rootReducer>
+//rootReducer возвращает нам тип всего приложения
 
 export type StoryType = typeof store
 
