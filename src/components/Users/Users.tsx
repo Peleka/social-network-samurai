@@ -1,8 +1,7 @@
 import React from "react";
-import s from './Users.module.css'
-import userPhoto from '../../assets/images/user.jpg'
 import {UserType} from "../../redux/usersReducer";
-import {NavLink} from "react-router-dom";
+import Paginator from "../common/Paginator/Paginator";
+import User from "./User";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -15,63 +14,31 @@ type UsersPropsType = {
     followThunkCreator: (id: number) => void
 }
 
-const Users = (props: UsersPropsType) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
+const Users: React.FC<UsersPropsType> = ({
+                                             totalUsersCount, pageSize, currentPage,
+                                             onPageChanged, usersPage, isFollowingInProgress,
+                                             unfollowThunkCreator,
+                                             followThunkCreator
+                                         }) => {
 
     return <div>
-        <div>
-            {pages.map((p, index) => {
-                return <span key={index}
-                             className={props.currentPage === p ? s.selectedPage : ''}
-                             onClick={(e) => {
-                                 props.onPageChanged(p)
-                             }}>{p}</span>
-            })}
-        </div>
-        {
-            props.usersPage.map(u =>
-                <div key={u.id}>
-                    <div>
-                        <div>
-                            <NavLink to={'/profile/' + u.id}>
-                                <img src={u.photos.small != null ?
-                                    u.photos.small : userPhoto}
-                                     className={s.ava_photo}
-                                     alt={'ava'}
-                                />
-                            </NavLink>
+        <Paginator
+            currentPage={currentPage}
+            onPageChanged={onPageChanged}
+            totalUsersCount={totalUsersCount}
+            pageSize={pageSize}
+        />
 
-                        </div>
-                        <div>
-                            {u.followed
-                                ?
-                                <button disabled={props.isFollowingInProgress.some(id => id === u.id)} onClick={() => {
-                                    props.unfollowThunkCreator(u.id)
-                                }}>
-                                    Unfollow
-                                </button>
-                                : <button disabled={props.isFollowingInProgress.some(id => id === u.id)}
-                                          onClick={() => {
-                                              props.followThunkCreator(u.id)
-                                          }}>
-                                    Follow
-                                </button>
-                            }
-                        </div>
-                    </div>
-                    <div>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
-                    </div>
-                </div>
-            )
+        {
+            usersPage.map(u => <User
+                key={u.id}
+                user={u}
+                isFollowingInProgress={isFollowingInProgress}
+                followThunkCreator={followThunkCreator}
+                unfollowThunkCreator={unfollowThunkCreator}
+            />)
         }
     </div>
 }
-
 
 export default Users;

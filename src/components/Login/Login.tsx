@@ -1,7 +1,7 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {required} from "../../utils/validator";
-import {Input} from "../common/FormsControls/FormsControls";
+import {createField, Input} from "../common/FormsControls/FormsControls";
 import {connect} from "react-redux";
 import {login} from "../../redux/authReducer";
 import {Redirect} from "react-router-dom";
@@ -13,31 +13,14 @@ type FormDataType = {
     password: string
     rememberMe: boolean
 }
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field placeholder={"Email"}
-                       component={Input}
-                       name={"email"}
-                       validate={[required]}
-                />
-            </div>
-            <div>
-                <Field placeholder={"Password"}
-                       type={"password"}
-                       component={Input}
-                       name={"password"}
-                       validate={[required]}
-                />
-            </div>
-            <div>
-                <Field type={'checkbox'}
-                       component={Input}
-                       name={"rememberMe"}
-                />
-            </div>
-            {props.error && <div className={classes.formCommonError}>{props.error}</div>}
+        <form onSubmit={handleSubmit}>
+            {createField('Email', 'email', [required], Input)}
+            {createField('Password', 'password', [required], Input, {type: "password"})}
+            {createField(null, 'rememberMe', [], Input, {type: "checkbox"}, "remember Me")}
+
+            {error && <div className={classes.formCommonError}>{error}</div>}
 
             <div>
                 <button>Login</button>
@@ -58,10 +41,10 @@ const Login = (props) => {
         //тут из пропсов connect нам достает ф-цию login, которая внутри себя диспатчит вызов loginTC
         props.login(formData.email, formData.password, formData.rememberMe)
     }
-    if(props.isAuth) {
+    if (props.isAuth) {
         return <Redirect to={"/profile"}/>
     }
-     return (
+    return (
         <div>
             <h1>Login</h1>
             <LoginReduxForm onSubmit={onSubmit}/>
