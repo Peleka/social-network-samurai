@@ -30,6 +30,7 @@ const User: React.FC<UserPropsType> = ({user, isFollowingInProgress, unfollowThu
                     {user.followed
                         ?
                         <button disabled={isFollowingInProgress.some(id => id === user.id)} onClick={() => {
+                            debugger
                             unfollowThunkCreator(user.id)
                         }}>
                             Unfollow

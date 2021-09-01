@@ -26,11 +26,13 @@ import {
 class UsersContainer extends React.Component<UsersPropsType, AppStateType> {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        let {currentPage,pageSize } = this.props
+        this.props.getUsers(currentPage, pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize)
+        let {pageSize} = this.props
+        this.props.getUsers(pageNumber, pageSize)
     }
 
     render() {
@@ -79,7 +81,6 @@ type MapDispatchPropsType = {
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-    console.log('mstp')
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
@@ -89,29 +90,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         isFollowingInProgress: getIsFollowingInProgress(state),
     }
 }
-
-// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-//     return {
-//         follow: (userId: number) => {
-//             dispatch(followAC(userId))
-//         },
-//         unfollow: (userId: number) => {
-//             dispatch(unfollowAC(userId))
-//         },
-//         setUsers: (users: Array<UserType>) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         setCurrentPage: (currentPage: number) => {
-//             dispatch(setCurrentPageAC(currentPage))
-//         },
-//         setTotalUsersCount: (totalUserCount: number) => {
-//             dispatch(setTotalUsersCountAC(totalUserCount))
-//         },
-//         setIsFetching: (isFetching: boolean) => {
-//             dispatch(setIsFetchingAC(isFetching))
-//         },
-//     }
-// }
 
 export default connect(mapStateToProps,
     {
