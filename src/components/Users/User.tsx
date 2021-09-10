@@ -48,7 +48,6 @@ const User: React.FC<UserPropsType> = ({user, isFollowingInProgress, unfollowThu
                 <div>{user.name}</div>
                 <div>{user.status}</div>
             </div>
-            )
         </div>
     )
 }

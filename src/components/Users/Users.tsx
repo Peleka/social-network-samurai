@@ -25,8 +25,9 @@ const Users: React.FC<UsersPropsType> = ({
         <Paginator
             currentPage={currentPage}
             onPageChanged={onPageChanged}
-            totalUsersCount={totalUsersCount}
+            totalItemsCount={totalUsersCount}
             pageSize={pageSize}
+            portionSize={10}
         />
 
         {

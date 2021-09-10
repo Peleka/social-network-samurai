@@ -103,7 +103,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
         dispatch(setIsFetching(false))
         dispatch(setUsers(data.items))
         //временно в комменте, чтобы не выводило миллион страниц
-        // dispatch(setTotalUsersCount(response.data.totalCount))
+        dispatch(setTotalUsersCount(data.totalCount))
     }
 }
 
@@ -117,13 +117,13 @@ const followUnfollowFlow = async (dispatch: AppDispatch, id: number, apiMethod: 
 }
 
 export const unfollowThunkCreator = (id: number) => {
-    return (dispatch: AppDispatch) => {
-        followUnfollowFlow(dispatch, id, usersAPI.unFollowUser.bind(usersAPI), unfollow)
+    return async (dispatch: AppDispatch) => {
+        await followUnfollowFlow(dispatch, id, usersAPI.unFollowUser.bind(usersAPI), unfollow)
     }
 }
 
 export const followThunkCreator = (id: number) => {
-    return (dispatch: AppDispatch) => {
-        followUnfollowFlow(dispatch, id, usersAPI.followUser.bind(usersAPI), follow)
+    return async (dispatch: AppDispatch) => {
+       await followUnfollowFlow(dispatch, id, usersAPI.followUser.bind(usersAPI), follow)
     }
 }

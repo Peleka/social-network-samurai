@@ -9,13 +9,13 @@ type ProfilePropsType = {
     updateStatus: any
 }
 
-const Profile = (props: ProfilePropsType) => {
+const Profile: React.FC<ProfilePropsType> = ({profile, status, updateStatus}) => {
     return (
         <div>
             <ProfileInfo
-                profile={props.profile}
-                status={props.status}
-                updateStatus={props.updateStatus}
+                profile={profile}
+                status={status}
+                updateStatus={updateStatus}
             />
             <MyPostsContainer />
         </div>
