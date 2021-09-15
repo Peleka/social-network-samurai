@@ -2,7 +2,7 @@
   "name": "samurai",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Peleka.github.io/social-network-samurai",
+  "homepage": "https://peleka.github.io/social-network-samurai",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

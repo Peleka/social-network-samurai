@@ -5,6 +5,7 @@ const ADD_POST = "ADD-POST"
 const DELETE_POST = "DELETE_POST"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_STATUS = "SET_STATUS"
+const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS"
 
 export type PostsType = {
     id?: number
@@ -71,7 +72,13 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
         case DELETE_POST: {
             return {
                 ...state,
-                posts: state.posts.filter(p => p.id != action.postId)
+                posts: state.posts.filter(p => p.id !== action.postId)
+            }
+        }
+        case SAVE_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos} as ProfileType
             }
         }
         default:
@@ -80,11 +87,13 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 }
 
 export const addPostAC = (messageForNewPost: string) => {
-    return {type: ADD_POST,messageForNewPost} as const
+    return {type: ADD_POST, messageForNewPost} as const
 }
 export const deletePostAC = (postId: any) => ({type: DELETE_POST, postId} as const)
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const savePhotoSuccess = (photos: ProfilePhotosType) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
+
 //уже не сэтаем
 export const getUsersProfileThunkCreator = (userId: string) => async (dispatch: AppDispatch) => {
     let response = await usersAPI.getProfile(userId)
@@ -100,5 +109,11 @@ export const updateStatusThunkCreator = (status: string) => async (dispatch: App
     let response = await profileAPI.updateStatus(status)
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status))
+    }
+}
+export const savePhoto = (photoFile: string) => async (dispatch: AppDispatch) => {
+    let response = await profileAPI.savePhoto(photoFile)
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
