@@ -1,3 +1,16 @@
 .selectedPage {
     font-weight: bold;
 }
+
+.pagesList {
+    width: 370px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.pageBtn {
+    background-color: #099fb3;
+    border-radius: 10px;
+    border-color: #099fb3;
+    color: white;
+}

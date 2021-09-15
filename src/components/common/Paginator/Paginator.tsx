@@ -24,12 +24,15 @@ const Paginator: React.FC<PaginatorPropsType> = ({
     const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     const rightPortionPageNumber = portionNumber * portionSize;
 
-    return <div>
+    return <div className={s.pagesList}>
         {
             portionNumber > 1 &&
-            <button onClick={() => {
-                setPortionNumber(portionNumber - 1)
-            }}>
+            <button
+                className={s.pageBtn}
+                onClick={() => {
+                    setPortionNumber(portionNumber - 1)
+                }}
+            >
                 PREV
             </button>
         }
@@ -53,9 +56,12 @@ const Paginator: React.FC<PaginatorPropsType> = ({
         }
         {
             portionCount > portionNumber &&
-            <button onClick={() => {
-                setPortionNumber(portionNumber + 1)
-            }}>
+            <button
+                className={s.pageBtn}
+                onClick={() => {
+                    setPortionNumber(portionNumber + 1)
+                }}
+            >
                 NEXT
             </button>
         }
