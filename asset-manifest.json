@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/social-network-samurai/static/css/main.2fb0b2f5.chunk.css",
+    "main.js": "/social-network-samurai/static/js/main.48311586.chunk.js",
+    "main.js.map": "/social-network-samurai/static/js/main.48311586.chunk.js.map",
+    "runtime-main.js": "/social-network-samurai/static/js/runtime-main.92381b13.js",
+    "runtime-main.js.map": "/social-network-samurai/static/js/runtime-main.92381b13.js.map",
+    "static/js/2.82c6f6a8.chunk.js": "/social-network-samurai/static/js/2.82c6f6a8.chunk.js",
+    "static/js/2.82c6f6a8.chunk.js.map": "/social-network-samurai/static/js/2.82c6f6a8.chunk.js.map",
+    "static/js/3.481f04ec.chunk.js": "/social-network-samurai/static/js/3.481f04ec.chunk.js",
+    "static/js/3.481f04ec.chunk.js.map": "/social-network-samurai/static/js/3.481f04ec.chunk.js.map",
+    "index.html": "/social-network-samurai/index.html",
+    "static/css/main.2fb0b2f5.chunk.css.map": "/social-network-samurai/static/css/main.2fb0b2f5.chunk.css.map",
+    "static/js/2.82c6f6a8.chunk.js.LICENSE.txt": "/social-network-samurai/static/js/2.82c6f6a8.chunk.js.LICENSE.txt",
+    "static/media/preloader.d5d18c6a.gif": "/social-network-samurai/static/media/preloader.d5d18c6a.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.92381b13.js",
+    "static/js/2.82c6f6a8.chunk.js",
+    "static/css/main.2fb0b2f5.chunk.css",
+    "static/js/main.48311586.chunk.js"
+  ]
+}
