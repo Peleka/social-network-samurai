@@ -14,11 +14,14 @@ export type PostsType = {
 }
 export type ProfileType = {
     aboutMe: string
-    contacts: ProfileContactsType
     userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ProfileContactsType
     photos: ProfilePhotosType
 }
-type ProfileContactsType = {
+export type ProfileContactsType = {
     facebook: string
     website: boolean
     vk: string
