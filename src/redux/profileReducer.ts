@@ -1,5 +1,7 @@
-import {ActionsTypes, AppDispatch} from "./redux-store"
+import {ActionsTypes, AppDispatch, AppStateType} from "./redux-store"
 import {profileAPI, usersAPI} from "../api/api";
+import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = "ADD-POST"
 const DELETE_POST = "DELETE_POST"
@@ -118,5 +120,18 @@ export const savePhoto = (photoFile: string) => async (dispatch: AppDispatch) =>
     let response = await profileAPI.savePhoto(photoFile)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+export const saveProfile = (formData: ProfileFormDataType) => async (dispatch: AppDispatch, getState: () => AppStateType) => {
+    const userId = getState().auth.id
+    const response = await profileAPI.saveProfile(formData)
+    if (response.data.resultCode === 0) {
+        //@ts-ignore
+            dispatch(getUsersProfileThunkCreator(userId))
+    } else {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some Error"
+        //@ts-ignore
+        dispatch(stopSubmit('edit_profile', {_error: message}))
+        return Promise.reject(response.data.messages[0])
     }
 }

@@ -9,12 +9,14 @@ type ProfilePropsType = {
     updateStatus: any
     isOwner: boolean
     savePhoto: any
+    saveProfile:any
 }
 
-const Profile: React.FC<ProfilePropsType> = ({profile, status, updateStatus, isOwner, savePhoto}) => {
+const Profile: React.FC<ProfilePropsType> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
     return (
         <div>
             <ProfileInfo
+                saveProfile={saveProfile}
                 isOwner={isOwner}
                 profile={profile}
                 status={status}

@@ -19,11 +19,11 @@ type ProfileDataFormPropsType = {
 export const ProfileDataForm = reduxForm<ProfileType, ProfileDataFormPropsType>(
     {form: 'edit_profile'})((
     {
-        profile,
         setEditProfile,
         error,
         savePhoto,
-        handleSubmit
+        handleSubmit,
+        profile
     }
 ) => {
 
@@ -46,22 +46,22 @@ export const ProfileDataForm = reduxForm<ProfileType, ProfileDataFormPropsType>(
 
             <div>
                 <span>About Me: </span>
-                {createField('About Me','aboutMe', [], Input,)}
+                {createField('About Me', 'aboutMe', [], Input,)}
             </div>
 
             <div>
                 <span>Full Name: </span>
-                {createField( 'Full name','fullName', [], Input)}
+                {createField('Full name', 'fullName', [], Input)}
             </div>
 
             <div>
                 <span>My professional skills: </span>
-                {createField( 'My professional skills','lookingForAJobDescription', [], Textarea)}
+                {createField('My professional skills', 'lookingForAJobDescription', [], Textarea)}
             </div>
 
             <div>
-                <span >Looking For A Job: </span>
-                {createField( '', 'lookingForAJob', [] ,Input,{type: 'checkbox'})}
+                <span>Looking For A Job: </span>
+                {createField('', 'lookingForAJob', [], Input, {type: 'checkbox'})}
             </div>
 
             <div>
@@ -69,7 +69,7 @@ export const ProfileDataForm = reduxForm<ProfileType, ProfileDataFormPropsType>(
                 {Object.keys(profile.contacts).map((key) => {
                         return (
                             <div key={key}>
-                                <b>{key} : {createField( key,'contacts.' + key, [], Input)}</b>
+                                <b>{key} : {createField(key, 'contacts.' + key, [], Input)}</b>
                             </div>
                         )
                     }
