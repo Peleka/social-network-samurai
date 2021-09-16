@@ -35,7 +35,11 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
                 {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
 
                 { editMode
-                    ? <ProfileDataForm/>
+                    ? <ProfileDataForm
+                        profile={profile}
+                        savePhoto={savePhoto}
+                        setEditProfile={setEditMode}
+                    />
                     : <ProfileData
                         profile={profile}
                         isOwner={isOwner}
