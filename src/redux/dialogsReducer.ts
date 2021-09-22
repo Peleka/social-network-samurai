@@ -1,4 +1,4 @@
-import {ActionsTypes} from "./redux-store";
+import {AppActionsTypes} from "./redux-store";
 
 const ADD_MESSAGE = "ADD_MESSAGE"
 
@@ -29,7 +29,7 @@ const initialState = {
 export type InitialStateType = typeof initialState
 
 
-export const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const dialogsReducer = (state: InitialStateType = initialState, action: AppActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE: {
             let newMessage: MessageType = {

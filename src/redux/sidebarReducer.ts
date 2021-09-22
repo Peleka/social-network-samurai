@@ -1,4 +1,4 @@
-import { ActionsTypes } from "./redux-store"
+import { AppActionsTypes } from "./redux-store"
 
 type FriendsType = {
     id?: number
@@ -16,6 +16,6 @@ let initialState = {
 
 type InitialStatePropsType = typeof initialState
 
-export const sidebarReducer = (state: InitialStatePropsType = initialState, action: ActionsTypes): InitialStatePropsType => {
+export const sidebarReducer = (state: InitialStatePropsType = initialState, action: AppActionsTypes): InitialStatePropsType => {
     return state
 }

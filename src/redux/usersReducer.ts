@@ -1,4 +1,4 @@
-import {ActionsTypes, AppDispatch} from "./redux-store"
+import {AppActionsTypes, AppDispatch} from "./redux-store"
 import {usersAPI} from "../api/api";
 import {updateObjectInArray} from "../utils/helper";
 
@@ -41,7 +41,7 @@ let initialState = {
 
 export type InitialStateType = typeof initialState
 
-export const usersReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: AppActionsTypes): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {

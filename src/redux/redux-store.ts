@@ -11,18 +11,19 @@ import {
     unfollow,
     usersReducer
 } from "./usersReducer";
-import {authReducer, setAuthUserData} from "./authReducer";
-import thunkMiddleware from "redux-thunk";
-import { reducer as formReducer } from 'redux-form'
+import {authReducer, getCaptchaUrlSuccess, setAuthUserData} from "./authReducer";
+import thunkMiddleware, {ThunkAction} from "redux-thunk";
+import {reducer as formReducer} from 'redux-form'
 import {initializedSuccessAC, appReducer} from "./appReducer";
 
-export type ActionsTypes = ReturnType<typeof addPostAC>
+export type AppActionsTypes = ReturnType<typeof addPostAC>
     | ReturnType<typeof addMessageAC>
     | ReturnType<typeof follow> | ReturnType<typeof unfollow>
     | ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof setIsFetching> | ReturnType<typeof setUserProfile> | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof toggleFollowingInProgress> | ReturnType<typeof setStatus>
     | ReturnType<typeof initializedSuccessAC> | ReturnType<typeof deletePostAC> | ReturnType<typeof savePhotoSuccess>
+    | ReturnType<typeof getCaptchaUrlSuccess>
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -33,6 +34,8 @@ let rootReducer = combineReducers({
     form: formReducer, //обязательно д.б. названо form
     app: appReducer
 })
+
+export type AppThunkType<ReturnType = Promise<void>> = ThunkAction<ReturnType, AppStateType, unknown, AppActionsTypes>
 
 export type AppStateType = ReturnType<typeof rootReducer>
 //rootReducer возвращает нам тип всего приложения

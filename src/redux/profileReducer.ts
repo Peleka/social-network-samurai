@@ -1,4 +1,4 @@
-import {ActionsTypes, AppDispatch, AppStateType} from "./redux-store"
+import {AppActionsTypes, AppDispatch, AppStateType} from "./redux-store"
 import {profileAPI, usersAPI} from "../api/api";
 import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 import {stopSubmit} from "redux-form";
@@ -49,7 +49,7 @@ let initialState = {
 
 export type InitialStateType = typeof initialState
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: AppActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost: PostsType = {
