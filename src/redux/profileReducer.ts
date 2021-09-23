@@ -111,10 +111,15 @@ export const getStatusThunkCreator = (userId: string) => async (dispatch: AppDis
 }
 
 export const updateStatusThunkCreator = (status: string) => async (dispatch: AppDispatch) => {
-    let response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0) {
-        dispatch(setStatus(status))
+    try {
+        let response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+    } catch (e) {
+        //dispatch ошибки, вывод ошибки, откатить что-то
     }
+    
 }
 export const savePhoto = (photoFile: string) => async (dispatch: AppDispatch) => {
     let response = await profileAPI.savePhoto(photoFile)
